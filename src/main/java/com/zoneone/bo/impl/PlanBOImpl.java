@@ -31,8 +31,8 @@ public class PlanBOImpl implements BaseBO {
 		this.loadPlanDatas(planFormBean);
 
 		Plan plan = new Plan();
-		plan = planDTO.fromPlanFormBeanToPlanDBBean(planFormBean);
-		this.planDAOImpl.save(plan);
+		//plan = planDTO.fromPlanFormBeanToPlanDBBean(planFormBean);
+		//this.planDAOImpl.save(plan);
 		baseFormBean = planFormBean;
 	}
 
@@ -42,16 +42,20 @@ public class PlanBOImpl implements BaseBO {
 	public void validate(BaseFormBean baseFormBean) throws Exception {
 		PlanFormBean planFormBean = (PlanFormBean) baseFormBean;
 		this.loadPlanDatas(planFormBean);
-		if (planFormBean.getPlanNme().isEmpty()) {
+		if (planFormBean.getPlanNme() == null || planFormBean.getPlanNme().isEmpty()) {
 			throw new Exception("Plan Name is requried!");
 		}
-		if (planFormBean.getAmt().isEmpty()) {
+		if (planFormBean.getAmt() == null || planFormBean.getAmt().isEmpty()) {
 			throw new Exception("Amount is requried!");
 		}
 	}
 
+	/*
+	 * method to fetch plan details
+	 */
 	private void loadPlanDatas(PlanFormBean planFormBean) {
-		List<Plan> plans = planDAOImpl.getPlanListsForUser(Integer.parseInt(planFormBean.getUserId()));
+		/*List<Plan> plans = planDAOImpl.getPlanListsForUser(Integer.parseInt(planFormBean.getUserId()));*/
+		List<Plan> plans = new ArrayList<Plan>();
 		List<PlanFormBean> planFormBeans = new ArrayList<PlanFormBean>();
 		for (Plan plan : plans) {
 			PlanFormBean innerBean = new PlanFormBean();

@@ -19,8 +19,12 @@
 	</bean>
 	<!-- End of BO classes -->
 
+
+
 	<!-- Start of DTO classes -->
 	<bean id="planDTO" class="com.zonenone.dto.PlanDTO" />
+	<bean id="planDAOImpl" class="com.zonenone.dao.PlanDAOImpl" />
+	<bean id="userDAOImpl" class="com.zonenone.dao.UserDAOImpl" />
 	<!-- End of DTO classes -->
 
 </beans>
