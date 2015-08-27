@@ -1,0 +1,4 @@
+applications:
+- name: Zone None
+  instances: 1
+  path: ./target/hackthon.war
