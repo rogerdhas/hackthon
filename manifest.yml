@@ -2,7 +2,3 @@ applications:
 - name: ZoneNone
   instances: 1
   path: ./target/hackthon.war
-  services:
-    - mysql-service
-  env:
-    SPRING_PROFILES_DEFAULT: cloud
