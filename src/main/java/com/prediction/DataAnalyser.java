@@ -10,9 +10,9 @@ public class DataAnalyser {
 	List<String> output = new ArrayList<String>();
 	
 	
-	public List<String> Predict(List<CustData> customer,Double cPrice,Double newUsage,Double newPrice,Double factor,Double maxPrice) 
+	public List<String> Predict(List<CustData> customer,Double cPrice,Double newUsage,Double newPrice,Double factor,Double maxPrice,Double cUsage) 
 	{
-		Double cUsage = 1.0;
+		 
 		Double calulatedUsage = (factor * (newPrice-cPrice))+ cUsage;
 		for(CustData c : customer)
 		{

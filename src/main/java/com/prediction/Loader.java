@@ -26,23 +26,27 @@ public class Loader {
 		Double currentPrice = 80.0;
 		Double maxPrice = 200.0; //30,45,60,80
 		Double factor = 0.15;
+		Double cUsage = 12.0;
 		if(planName.indexOf("Small") != -1 )
 		{
 			currentPrice = 30.0;
 			maxPrice = 45.0; //30,45,60,80
 			factor = 0.033;
+			cUsage = 1.0;
 		}
 		else if(planName.indexOf("Medium") != -1 )
 		{
 			currentPrice = 45.0;
 			maxPrice = 60.0; //30,45,60,80
 			factor = 0.066;
+			cUsage = 3.0;
 		}
 		else if(planName.indexOf("Large") != -1 )
 		{
 			currentPrice = 60.0;
 			maxPrice = 80.0; //30,45,60,80
 			factor = 0.1;
+			cUsage = 6.0;
 		}
 		newUsage = newUsage/1024;
 		
@@ -59,7 +63,7 @@ public class Loader {
 	            customerInfos.add(DataCleaner.SetInfo(line));
 			}
 			DataAnalyser analyse = new  DataAnalyser();
-			List<String> output = analyse.Predict(customerInfos,currentPrice,newUsage,newPrice,factor,maxPrice);
+			List<String> output = analyse.Predict(customerInfos,currentPrice,newUsage,newPrice,factor,maxPrice,cUsage);
 			
 			totalCustCount = output.size();
 			maleCount = 0;
