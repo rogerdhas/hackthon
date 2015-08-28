@@ -180,8 +180,9 @@ public class IndexController {
 			boImpl.save(baseFormBean);
 			mv.addObject("planBean", baseFormBean);
 			mv.addObject("planFormBean", baseFormBean);
+			session.setAttribute("currentPlan", planFormBean);
 			RedirectView redirectView = new RedirectView();
-			redirectView.setUrl("loadplan.do");
+			redirectView.setUrl("map.do");
 			mv.setView(redirectView);
 			return mv;
 		} catch (Exception e) {
@@ -202,10 +203,11 @@ public class IndexController {
 	@RequestMapping(value = "/map.do", method = RequestMethod.GET)
 	public ModelAndView loadMap(HttpServletRequest request, HttpServletResponse response) {
 		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
+		PlanFormBean planFormBean = this.getCurrentPlanDetails(request);
 		try {
 			ModelAndView mv = new ModelAndView("map");
 			mv.addObject("currentUrl", "map");
-			mv.addObject("mapSrc", boImpl.getMap());
+			mv.addObject("mapSrc", boImpl.getMap(planFormBean));
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
@@ -238,11 +240,12 @@ public class IndexController {
 	@RequestMapping(value = "/morrisbarchart.do", method = RequestMethod.GET)
 	public ModelAndView morrisBarChart(HttpServletRequest request, HttpServletResponse response) {
 		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
+		PlanFormBean planFormBean = this.getCurrentPlanDetails(request);
 		try {
 			ModelAndView mv = new ModelAndView("morris-bar-chart");
 			mv.addObject("currentUrl", "chart");
 			mv.addObject("currentChartUrl", "morrisBar");
-			mv.addObject("morrisBarValue", boImpl.getMorrisBar());
+			mv.addObject("morrisBarValue", boImpl.getMorrisBar(planFormBean));
 			//mv.addObject("morrisBarValue", getMorrisBarChartJsonStr());
 			return mv;
 		} catch (Exception e) {
@@ -280,12 +283,12 @@ public class IndexController {
 	@RequestMapping(value = "/bubblechart.do", method = RequestMethod.GET)
 	public ModelAndView loadBubbleChart(HttpServletRequest request, HttpServletResponse response) {
 		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
-
+		PlanFormBean planFormBean = this.getCurrentPlanDetails(request);
 		try {
 			ModelAndView mv = new ModelAndView("bubble-chart");
 			mv.addObject("currentUrl", "chart");
 			mv.addObject("currentChartUrl", "bubble");
-			mv.addObject("bubbleChartStr", boImpl.getBubbleChartJsonStr());
+			mv.addObject("bubbleChartStr", boImpl.getBubbleChartJsonStr(planFormBean));
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
@@ -301,11 +304,12 @@ public class IndexController {
 	@RequestMapping(value = "/liquidfillgauagechart.do", method = RequestMethod.GET)
 	public ModelAndView loadLiquidFillGauageChart(HttpServletRequest request, HttpServletResponse response) {
 		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
+		PlanFormBean planFormBean = this.getCurrentPlanDetails(request);
 		try {
 			ModelAndView mv = new ModelAndView("liquid-fill-gauage-chart");
 			mv.addObject("currentUrl", "chart");
 			mv.addObject("currentChartUrl", "liquidguage");
-			mv.addObject("ageValue", boImpl.getLiquidCount());
+			mv.addObject("ageValue", boImpl.getLiquidCount(planFormBean));
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
@@ -328,6 +332,12 @@ public class IndexController {
 		} catch (Exception e) {
 			return new ModelAndView("error");
 		}
+	}
+	
+	private PlanFormBean getCurrentPlanDetails(HttpServletRequest request){
+		HttpSession session = request.getSession();
+		PlanFormBean planFormBean = (PlanFormBean) session.getAttribute("currentPlan");
+		return planFormBean;
 	}
 
 }

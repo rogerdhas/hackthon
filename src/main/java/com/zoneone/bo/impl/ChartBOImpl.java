@@ -8,13 +8,28 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.prediction.Loader;
+import com.zonenone.dao.databeans.Plan;
+import com.zonenone.form.PlanFormBean;
 
 public class ChartBOImpl {
 	
-	public String getMap() throws JSONException{
+	private String getPlanType(int amt){
+		String planTyp = "Small";
+		if(amt >= 45 && amt <= 60){
+			planTyp = "Medium";
+		} else if(amt >= 61 && amt <= 80){
+			planTyp = "Large";
+		} else if(amt >= 81){
+			planTyp = "XL";
+		} 
+		return planTyp;
+	}
+	
+	public String getMap(PlanFormBean planFormBean) throws JSONException{
 		
 		//Plansize, dataSize, amt
-		Loader.analyse("Small", 1.5d, 35.0d);
+		Loader.analyse(this.getPlanType(Integer.parseInt(planFormBean.getAmt())),
+				Double.parseDouble(planFormBean.getData()), Double.parseDouble(planFormBean.getAmt()));
 		Map<String,Integer> state = Loader.state;
 		List<JSONObject> jsonList = new ArrayList<>();
 		JSONObject jsonObj = null;
@@ -28,11 +43,12 @@ public class ChartBOImpl {
 		return json;
 	}
 
-	public String getMorrisBar() throws JSONException {
-		Loader.analyse("Small", 2.5d, 5.0d);
+	public String getMorrisBar(PlanFormBean planFormBean) throws JSONException {
+		Loader.analyse(this.getPlanType(Integer.parseInt(planFormBean.getAmt())),
+				Double.parseDouble(planFormBean.getData()), Double.parseDouble(planFormBean.getAmt()));
 		List<JSONObject> list = new ArrayList<>();
 		JSONObject jsonObj = new JSONObject();
-		jsonObj.put("state", "USA");
+		jsonObj.put("state", "Gender");
 		jsonObj.put("totalCount", String.valueOf(Loader.totalCustCount));
 		jsonObj.put("maleCount", String.valueOf(Loader.maleCount));
 		jsonObj.put("femaleCount", String.valueOf(Loader.femaleCount));
@@ -47,26 +63,28 @@ public class ChartBOImpl {
 		return json;
 	}
 	
-	public Integer getLiquidCount(){
-		Loader.analyse("Small", 2.5d, 5.0d);
-		int totalCount = Loader.totalCustCount;
-		int genderCount = Loader.maleCount + Loader.femaleCount;
-		int percentage = ((totalCount - genderCount) / totalCount) * 100;
+	public double getLiquidCount(PlanFormBean planFormBean){
+		Loader.analyse(this.getPlanType(Integer.parseInt(planFormBean.getAmt())),
+				Double.parseDouble(planFormBean.getData()), Double.parseDouble(planFormBean.getAmt()));
+		double totalCount = Loader.totalCustCount;
+		double genderCount = Loader.maleCount + Loader.femaleCount;
+		double percentage = ((totalCount - genderCount) / totalCount) * 100;
 		return percentage;
 	}
 
-	public String getBubbleChartJsonStr() throws JSONException {
+	public String getBubbleChartJsonStr(PlanFormBean planFormBean) throws JSONException {
 		
 		//Plansize, dataSize, amt
-		Loader.analyse("Small", 1.5d, 35.0d);
+		Loader.analyse(this.getPlanType(Integer.parseInt(planFormBean.getAmt())),
+				Double.parseDouble(planFormBean.getData()), Double.parseDouble(planFormBean.getAmt()));
 		Map<String,Integer> age = Loader.age;
-		String result = "";
+		String result = "[['Age group', 'Total Count']";
 		for (Map.Entry<String, Integer> entry : age.entrySet()) {
-			result = result + " {text: \""+entry.getKey()+"\", count: \""+entry.getValue()+"\"},\n ";
+			result += ",['"+ entry.getKey() +"',"+ entry.getValue() +"]";
 		}
 		
-		String json = this.getBubbleJs(result);
-		return json;
+		result += "]";
+		return result;
 	}
 
 

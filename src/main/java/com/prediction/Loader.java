@@ -23,6 +23,7 @@ public class Loader {
 		//String planName = "Small";
 		//Double newUsage = 1.5; //1,3,6,12 
 		//Double newPrice = 35.0;
+		newUsage = newUsage/1024;
 		Double currentPrice = 30.0;
 		Double maxPrice = 45.0; //30,45,60,80
 		Double factor = 0.033;
@@ -65,6 +66,8 @@ public class Loader {
 				{k="Age(41-50)";}
 				else if( a >= 51 && a <=60 )
 				{k="Age(51-60)";}
+				else 
+				{k="Age(>65)";}
 				count = age.containsKey(k) ? age.get(k) : 0;
 				age.put(k, count + 1);
 				if(l[1].equalsIgnoreCase("m")) maleCount++; else femaleCount++;
