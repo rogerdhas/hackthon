@@ -182,7 +182,7 @@ public class IndexController {
 			mv.addObject("planFormBean", baseFormBean);
 			session.setAttribute("currentPlan", planFormBean);
 			RedirectView redirectView = new RedirectView();
-			redirectView.setUrl("map.do");
+			redirectView.setUrl("liquidfillgauagechart.do");
 			mv.setView(redirectView);
 			return mv;
 		} catch (Exception e) {

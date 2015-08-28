@@ -79,7 +79,7 @@
 			<li><a href="liquidfillgauagechart.do">LikeliHood</a></li>
 			<li><a href="map.do">DemoGraphical</a></li>
 			<li><a href="morrisbarchart.do">Gender</a></li>
-			<li class="active"><a href="bubblechart.do">Bubble</a></li>
+			<li class="active"><a href="bubblechart.do">Age Group</a></li>
 		</ol>
 
 		<div class="row">
