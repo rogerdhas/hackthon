@@ -36,5 +36,9 @@
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
+ <context-param>  
+    <param-name>planContext</param-name>  
+    <param-value></param-value>  
+  </context-param> 
 
 </web-app>

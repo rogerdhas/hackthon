@@ -41,6 +41,13 @@
 	  		<strong>Error!</strong>${errorMsg}
 	  	</div>
 	  	</c:if>
+		<div class="form-group"><form:select class="form-control"
+			id="type" path="planType" placeholder="type">
+			<form:option value="Small">Small</form:option>
+			<form:option value="Medium">Medium</form:option>
+			<form:option value="Large">Large</form:option>
+			</form:select>
+		</div>
 		<div class="form-group"><form:input class="form-control"
 			id="name" path="planNme" placeholder="Name"/></div>
 		<div class="form-group"><form:input class="form-control"

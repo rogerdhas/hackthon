@@ -13,7 +13,9 @@
 <link
 	href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese'
 	rel='stylesheet' type='text/css'>
-
+<script language="javascript">
+	 ${bubbleChartStr} ​
+</script>
 <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
   <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
   <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
@@ -24,7 +26,7 @@
   <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
   <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
   <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
-  <script src="${pageContext.request.contextPath}/js/bubble-chart.js"></script>
+  <%-- <script src="${pageContext.request.contextPath}/js/bubble-chart.js"></script> --%>
 <style>
 .bubbleChart {
 	min-width: 100px;
@@ -39,11 +41,10 @@
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container"><input type="hidden" id="sample" />
 <%@ include file="header.jsp"%>
 <%@ include file="menu.jsp"%>
 <%@ include file="chartmenu.jsp"%>
-${bubbleChartStr}
 <div class="bubbleChart" />
 <br />
 <div class="col-md-12" style="margin-top: 20px;">

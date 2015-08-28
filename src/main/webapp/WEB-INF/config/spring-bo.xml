@@ -17,6 +17,8 @@
 	<bean id="loginBOImpl" class="com.zoneone.bo.impl.LoginBOImpl">
 		<property name="userDAOImpl" ref="userDAOImpl"></property>
 	</bean>
+	<bean id="chartBOImpl" class="com.zoneone.bo.impl.ChartBOImpl">
+	</bean>
 	<!-- End of BO classes -->
 
 

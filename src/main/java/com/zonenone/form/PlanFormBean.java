@@ -5,6 +5,8 @@ import java.util.List;
 
 public class PlanFormBean implements BaseFormBean {
 	
+	private String planType;
+	
 	private String id;
 	
 	private String planNme;
@@ -20,6 +22,14 @@ public class PlanFormBean implements BaseFormBean {
 	private String userId;
 	
 	private List<PlanFormBean> planFormBeans = new ArrayList<PlanFormBean>();
+
+	public String getPlanType() {
+		return planType;
+	}
+
+	public void setPlanType(String planType) {
+		this.planType = planType;
+	}
 
 	public List<PlanFormBean> getPlanFormBeans() {
 		return planFormBeans;

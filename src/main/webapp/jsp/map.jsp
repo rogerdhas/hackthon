@@ -30,12 +30,17 @@
 
 	function tooltipHtml(n, d){	/* function to create html content string in tooltip div. */
 		return "<h4>"+n+"</h4><table>"+
-			"<tr><td>Rate</td><td>"+(d.low)+"</td></tr>"+
-			"<tr><td>Quality</td><td>"+(d.avg)+"</td></tr>"+
-			"<tr><td>Range</td><td>"+(d.high)+"</td></tr>"+
+			"<tr><td>Count</td><td>"+(d.low)+"</td></tr>"+
 			"</table>";
 	}
 	
+	var mapDatas = ${mapSrc};
+	var sampleMap = new Array();
+	
+	$.each(mapDatas, function(idx, obj) {
+		sampleMap[obj.state] = obj.count;
+	});
+		
 	var sampleData ={};	/* Sample random data. */	
 	["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
 	"ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH", 
@@ -43,11 +48,12 @@
 	"CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN", 
 	"WI", "MO", "AR", "OK", "KS", "LS", "VA"]
 		.forEach(function(d){ 
-			var low=Math.round(100*Math.random()), 
+			var low=sampleMap[d], 
 				mid=Math.round(100*Math.random()), 
 				high=Math.round(100*Math.random());
-			sampleData[d]={low:d3.min([low,mid,high]), high:d3.max([low,mid,high]), 
-					avg:Math.round((low+mid+high)/3), color:d3.interpolate("#ffffcc", "#800026")(low/100)}; 
+			var colorCoder = Math.round(100*Math.random());
+			sampleData[d]={low:sampleMap[d], high:d3.max([low,mid,high]), 
+					avg:Math.round((low+mid+high)/3), color:d3.interpolate("#0000CC", "#00FF99")(colorCoder/100)}; 
 		});
 	
 	/* draw states on id #statesvg */	

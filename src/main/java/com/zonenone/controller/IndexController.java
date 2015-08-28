@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.zonenone.form.BaseFormBean;
 import com.zonenone.form.LoginFormBean;
 import com.zonenone.form.PlanFormBean;
+import com.zoneone.bo.impl.ChartBOImpl;
 import com.zoneone.bo.impl.LoginBOImpl;
 import com.zoneone.bo.impl.PlanBOImpl;
 
@@ -48,8 +50,7 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/loadlogin.do", method = RequestMethod.GET)
-	public ModelAndView loadLogin(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadLogin(HttpServletRequest request, HttpServletResponse response) {
 		LoginFormBean loginFormBean = null;
 		try {
 			ModelAndView mv = new ModelAndView("login");
@@ -70,18 +71,16 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public ModelAndView home(
-			@ModelAttribute("loginFormBean") LoginFormBean loginFormBean,
-			HttpServletRequest request, HttpServletResponse response) {
-		LoginBOImpl loginBOImpl = (LoginBOImpl) appContext
-				.getBean("loginBOImpl");
+	public ModelAndView home(@ModelAttribute("loginFormBean") LoginFormBean loginFormBean, HttpServletRequest request,
+			HttpServletResponse response) {
+		LoginBOImpl loginBOImpl = (LoginBOImpl) appContext.getBean("loginBOImpl");
 		ModelAndView mv = new ModelAndView("home");
 		mv.addObject("loginFormBean", loginFormBean);
 		BaseFormBean baseFormBean = loginFormBean;
 		try {
 			loginBOImpl.validate(baseFormBean);
 			loginBOImpl.save(baseFormBean);
-			if(loginFormBean.getUserId() != null){
+			if (loginFormBean.getUserId() != null) {
 				HttpSession session = request.getSession();
 				session.setAttribute("currentUserId", loginFormBean.getUserId());
 				session.setAttribute("currentUserMailId", loginFormBean.getMailId());
@@ -107,8 +106,7 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/loadplan.do", method = RequestMethod.GET)
-	public ModelAndView loadPlan(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadPlan(HttpServletRequest request, HttpServletResponse response) {
 		BaseFormBean baseFormBean = null;
 		PlanBOImpl boImpl = (PlanBOImpl) appContext.getBean("planBOImpl");
 		try {
@@ -138,8 +136,7 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/loadplan1.do", method = RequestMethod.GET)
-	public ModelAndView loadPlan1(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadPlan1(HttpServletRequest request, HttpServletResponse response) {
 		BaseFormBean baseFormBean = null;
 		PlanBOImpl boImpl = (PlanBOImpl) appContext.getBean("planBOImpl");
 		try {
@@ -169,9 +166,8 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/saveplan.do", method = RequestMethod.POST)
-	public ModelAndView savePlan(
-			@ModelAttribute("planFormBean") PlanFormBean planFormBean,
-			HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView savePlan(@ModelAttribute("planFormBean") PlanFormBean planFormBean, HttpServletRequest request,
+			HttpServletResponse response) {
 		PlanBOImpl boImpl = (PlanBOImpl) appContext.getBean("planBOImpl");
 		ModelAndView mv = new ModelAndView("plan");
 		HttpSession session = request.getSession();
@@ -204,11 +200,12 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/map.do", method = RequestMethod.GET)
-	public ModelAndView loadMap(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadMap(HttpServletRequest request, HttpServletResponse response) {
+		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
 		try {
 			ModelAndView mv = new ModelAndView("map");
 			mv.addObject("currentUrl", "map");
+			mv.addObject("mapSrc", boImpl.getMap());
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
@@ -222,8 +219,7 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/chart.do", method = RequestMethod.GET)
-	public ModelAndView loadChart(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadChart(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ModelAndView mv = new ModelAndView("chart");
 			mv.addObject("currentUrl", "chart");
@@ -240,13 +236,14 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/morrisbarchart.do", method = RequestMethod.GET)
-	public ModelAndView morrisBarChart(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView morrisBarChart(HttpServletRequest request, HttpServletResponse response) {
+		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
 		try {
 			ModelAndView mv = new ModelAndView("morris-bar-chart");
 			mv.addObject("currentUrl", "chart");
 			mv.addObject("currentChartUrl", "morrisBar");
-			mv.addObject("morrisBarValue", getMorrisBarChartJsonStr());
+			mv.addObject("morrisBarValue", boImpl.getMorrisBar());
+			//mv.addObject("morrisBarValue", getMorrisBarChartJsonStr());
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
@@ -259,8 +256,7 @@ public class IndexController {
 	private String getMorrisBarChartJsonStr() {
 		ObjectMapper objectMapper = new ObjectMapper();
 		List<PlanFormBean> plans = new ArrayList<PlanFormBean>();
-		PlanFormBean formBean = new PlanFormBean("12", "SMS Plan", "10", "50",
-				"5GB", "300");
+		PlanFormBean formBean = new PlanFormBean("12", "SMS Plan", "10", "50", "5GB", "300");
 		plans.add(formBean);
 		formBean = new PlanFormBean("13", "Data Plan", "20", "60", "6GB", "400");
 		plans.add(formBean);
@@ -282,54 +278,18 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/bubblechart.do", method = RequestMethod.GET)
-	public ModelAndView loadBubbleChart(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadBubbleChart(HttpServletRequest request, HttpServletResponse response) {
+		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
+
 		try {
 			ModelAndView mv = new ModelAndView("bubble-chart");
 			mv.addObject("currentUrl", "chart");
 			mv.addObject("currentChartUrl", "bubble");
-			mv.addObject("bubbleChartStr", this.getBubbleChartJsonStr());
+			mv.addObject("bubbleChartStr", boImpl.getBubbleChartJsonStr());
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
 		}
-	}
-
-	/*
-	 * 
-	 */
-	private String getBubbleChartJsonStr() throws JSONException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		JSONArray chartArr = new JSONArray();
-		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("text", "Age 10-20");
-		jsonObject.put("value", "89.08%");
-		chartArr.put(jsonObject);
-		jsonObject = new JSONObject();
-		jsonObject.put("text", "Age 21-30");
-		jsonObject.put("text", "41.3%");
-		chartArr.put(jsonObject);
-		jsonObject = new JSONObject();
-		jsonObject.put("text", "Age 31-40");
-		jsonObject.put("value", "20%");
-		chartArr.put(jsonObject);
-		jsonObject = new JSONObject();
-		jsonObject.put("value", "Age 41-50");
-		jsonObject.put("value", "89.08%");
-		chartArr.put(jsonObject);
-		jsonObject = new JSONObject();
-		jsonObject.put("text", "Age 51-60");
-		jsonObject.put("value", "20%");
-		chartArr.put(jsonObject);
-		String json = null;
-		try {
-			objectMapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, true);
-			json = objectMapper.writeValueAsString(chartArr);
-			System.out.println("Bubble Chart Value :: " + json);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return json;
 	}
 
 	/**
@@ -339,13 +299,13 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/liquidfillgauagechart.do", method = RequestMethod.GET)
-	public ModelAndView loadLiquidFillGauageChart(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadLiquidFillGauageChart(HttpServletRequest request, HttpServletResponse response) {
+		ChartBOImpl boImpl = (ChartBOImpl) appContext.getBean("chartBOImpl");
 		try {
 			ModelAndView mv = new ModelAndView("liquid-fill-gauage-chart");
 			mv.addObject("currentUrl", "chart");
 			mv.addObject("currentChartUrl", "liquidguage");
-			mv.addObject("ageValue", 55);
+			mv.addObject("ageValue", boImpl.getLiquidCount());
 			return mv;
 		} catch (Exception e) {
 			return new ModelAndView("error");
@@ -359,8 +319,7 @@ public class IndexController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/chloropethbarchart.do", method = RequestMethod.GET)
-	public ModelAndView loadChloroBarChart(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ModelAndView loadChloroBarChart(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			ModelAndView mv = new ModelAndView("chloropeth-bar-chart");
 			mv.addObject("currentUrl", "chart");

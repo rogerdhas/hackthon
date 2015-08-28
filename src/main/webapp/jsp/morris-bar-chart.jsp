@@ -28,11 +28,11 @@
 <%@ include file="header.jsp"%>
 <%@ include file="menu.jsp"%>
 <%@ include file="chartmenu.jsp"%>
-
+<div class="col-md-5 pull-center" style="margin-top: 20px;">
 <div id="graph"></div>
 <pre id="code" class="prettyprint linenums" style="display: none;">
 //Use Morris.Bar
-Morris.Bar({
+<%-- Morris.Bar({
   element: 'graph',
   data: ${morrisBarValue },
   xkey: 'planNme',
@@ -41,8 +41,20 @@ Morris.Bar({
 }).on('click', function(i, row){
   console.log(i, row);
 });
+ --%>
+Morris.Bar({
+  element: 'graph',
+  data: ${morrisBarValue },
+  xkey: 'state',
+  ykeys: ['maleCount', 'femaleCount'],
+  labels: [ 'Male', 'Female']
+}).on('click', function(i, row){
+  console.log(i, row);
+});
+
 </pre>
 <br />
+</div>
 <div class="col-md-12" style="margin-top: 20px;">
 <%@ include file="footer.jsp"%></div>
 </div>
