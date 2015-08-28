@@ -17,7 +17,11 @@ public class DataAnalyser {
 		for(CustData c : customer)
 		{
 			String key=c.state+"|"+c.gender+"|"+c.age;
-			if(newPrice > maxPrice)
+			if(c.planUsage > newUsage  )
+			{
+				output.add(key+"|0");
+			}
+			else if(newPrice > maxPrice)
 			{
 				
 				output.add(key+"|0");
