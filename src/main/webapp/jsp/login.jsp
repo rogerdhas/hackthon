@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <%-- <link href="${pageContext. request. contextPath}/css/login.css" rel="stylesheet" /> --%>
-
+<title>VDSI Hackathon - Zone None</title>
 	<link rel="shortcut icon" href="${pageContext. request. contextPath}/assets/images/gt_favidcon.png">
 	
 	<link rel="stylesheet" media="screen" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,700">
@@ -155,7 +155,7 @@
 							<p class="simplenav">
 								<a href="index.jsp">Home</a> | 
 								<a href="about.html">About</a> |
-								<a href="plans.html">Plans</a> |
+								<a href="Plans.html">Plans</a> |
 								
 								<b><a href="#">Sign up</a></b>
 							</p>

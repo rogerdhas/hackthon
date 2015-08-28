@@ -37,8 +37,8 @@
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav pull-right">
 					<li class="active"><a href="#">Home</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Plans</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="Plans.html">Plans</a></li>
 					
 					<li><a class="btn" href="${pageContext. request. contextPath}/loadlogin.do">SIGN IN / SIGN UP</a></li>
 				</ul>
@@ -135,8 +135,8 @@ The Customer Plan Prediction System does exactly that, it helps the sales and ma
 						<div class="widget-body">
 							<p class="simplenav">
 								<a href="${pageContext.request.contextPath}/index.jsp">Home</a> | 
-								<a href="#">About</a> |
-								<a href="#">Plans</a> |
+								<a href="about.html">About</a> |
+								<a href="Plans.html">Plans</a> |
 								
 								<b><a href="#">Sign up</a></b>
 							</p>

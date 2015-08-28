@@ -23,10 +23,29 @@ public class Loader {
 		//String planName = "Small";
 		//Double newUsage = 1.5; //1,3,6,12 
 		//Double newPrice = 35.0;
+		Double currentPrice = 80.0;
+		Double maxPrice = 200.0; //30,45,60,80
+		Double factor = 0.15;
+		if(planName.indexOf("Small") != -1 )
+		{
+			currentPrice = 30.0;
+			maxPrice = 45.0; //30,45,60,80
+			factor = 0.033;
+		}
+		else if(planName.indexOf("Medium") != -1 )
+		{
+			currentPrice = 45.0;
+			maxPrice = 60.0; //30,45,60,80
+			factor = 0.066;
+		}
+		else if(planName.indexOf("Large") != -1 )
+		{
+			currentPrice = 60.0;
+			maxPrice = 80.0; //30,45,60,80
+			factor = 0.1;
+		}
 		newUsage = newUsage/1024;
-		Double currentPrice = 30.0;
-		Double maxPrice = 45.0; //30,45,60,80
-		Double factor = 0.033;
+		
 		try {
 			ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 			InputStream is = classloader.getResourceAsStream("sample.csv");

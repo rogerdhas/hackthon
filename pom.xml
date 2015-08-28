@@ -16,6 +16,7 @@
 		<hibernate.version>4.3.5.Final</hibernate.version>
 		<org.cloundfoundry-version>0.6.0</org.cloundfoundry-version>
 		<skip.unit.tests>false</skip.unit.tests>
+		<skip.integration.tests>false</skip.integration.tests>
 	</properties>
 	<dependencies>
 		<!-- <dependency> <groupId>org.cloudfoundry</groupId> <artifactId>cloudfoundry-runtime</artifactId> 
@@ -197,6 +198,16 @@
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.4.201502262128</version>
 				<!-- <version>0.7.5.201505241946</version> -->
+				
+				<configuration>
+					<sourceExcludes>
+						<sourceExclude>**/zoneone/**</sourceExclude>
+					</sourceExcludes>
+					<sourceIncludes>
+						<sourceInclude>**/zonenone/**</sourceInclude>
+					</sourceIncludes>
+				</configuration>
+				
 				<executions>
 
 					<!-- Start UT -->
@@ -226,6 +237,36 @@
 						</configuration>
 					</execution>
 					<!-- End UT -->
+
+					<!-- Start UT -->
+					<execution>
+						<id>pre-integration-test</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<destFile>${project.build.directory}/coverage-reports/jacoco-it.exec</destFile>
+							<!-- passing property which will contains settings for JaCoCo agent. 
+								If not specified, then "argLine" would be used for "jar" packaging -->
+							<propertyName>failsafeArgLine</propertyName>
+						</configuration>
+					</execution>
+					<!-- report phase setup -->
+					<execution>
+						<id>post-integration-test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration> <!-- output file with report data. -->
+							<dataFile>${project.build.directory}/coverage-reports/jacoco-it.exec</dataFile>
+							<!-- output directory for the reports. -->
+							<outputDirectory>${project.build.directory}/coverage-reports/jacoco-it</outputDirectory>
+						</configuration>
+					</execution>
+					<!-- End UT -->
+
 
 				</executions>
 			</plugin>
@@ -258,6 +299,41 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.15</version>
+				<executions>
+					<!-- Ensures that both integration-test and verify goals of the Failsafe 
+						Maven plugin are executed. -->
+					<execution>
+						<id>integration-tests</id>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+						<configuration>
+							<!-- Sets the VM argument line used when integration tests are run. -->
+							<argLine>${failsafeArgLine}</argLine>
+							<!-- Skips integration tests if the value of skip.integration.tests 
+								property is true -->
+							<skipTests>${skip.integration.tests}</skipTests>
+						</configuration>
+					</execution>
+				</executions>
+				<configuration>
+					<argLine>-XX:MaxPermSize=512m</argLine>
+					<!-- Excludes integration tests when unit tests are run. -->
+					<includes>
+						<include>**/IT.java</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+
+
+
 
 			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>

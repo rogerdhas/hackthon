@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>ZoneNone - Plan</title>
+<title>VDSI Hackathon - Zone None</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<link rel="shortcut icon" href="${pageContext. request. contextPath}/assets/images/gt_favidcon.png">
@@ -173,7 +173,7 @@
 							<p class="simplenav">
 								<a href="index.jsp">Home</a> | 
 								<a href="about.html">About</a> |
-								<a href="plans.html">Plans</a> |
+								<a href="Plans.html">Plans</a> |
 								
 								<b><a href="#">Sign up</a></b>
 							</p>

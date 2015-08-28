@@ -69,6 +69,8 @@ public class ChartBOImpl {
 		double totalCount = Loader.totalCustCount;
 		double genderCount = Loader.maleCount + Loader.femaleCount;
 		double percentage = ((totalCount - genderCount) / totalCount) * 100;
+		if(genderCount == 0) {percentage=0.0;}
+		else if(genderCount == totalCount) {percentage=100.0;}
 		return percentage;
 	}
 
