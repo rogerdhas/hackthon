@@ -65,7 +65,7 @@
 		<h2 class="thin">"What plan I can sell my customer?"  "Whom should I target?"</h2>
 		<p class="text-muted">
 			Well what if I can predict?<BR>
-The Customer Plan Prediction System does exactly that, it helps the sales and marketing team to predict "What plan will the customer buy next?".  At the heart of the system sits a prediction model that would analyze past customer plans (active and inactive) their behavior and predicts the future plan that he would be interested in.  Analyze which group is interested in the type of plan, where does this group live? What type of device does this group use? And much more before you draw the first blood!.
+The Customer Plan Predictive System does exactly that, it helps the sales and marketing team to predict "What plan will the customer buy next?".  At the heart of the system sits a prediction model that would analyze past customer plans (active and inactive) their behavior and predicts the future plan that he would be interested in.  Analyze which group is interested in the type of plan, where does this group live? What type of device does this group use? And much more before you draw the first blood!.
 		</p>
 	</div>
 	<!-- /Intro-->
