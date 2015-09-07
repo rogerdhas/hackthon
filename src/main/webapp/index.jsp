@@ -51,7 +51,7 @@
 	<header id="head">
 		<div class="container">
 			<div class="row">
-				<h1 class="lead">What will your customer buy next</h1>
+				<h1 class="lead">What will your customer buy next ? </h1>
 				<p class="tagline">Zone None: Senthil Retnaswamy,Roger Dhas,Rajesh Ravi</p>
 				
 			</div>
